@@ -3,12 +3,47 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UserInputHandler {
-    public static boolean checkFirstNameAndLastNameCorrectness(String userInput) {
+    public static Employee getEmployeeFromUser() {
+        System.out.println("Adding new employee");
+
+        System.out.println("Enter employee's first name");
+        String firstName = getEmployeesDataFromUser();
+
+        System.out.println("Enter employee's last name");
+        String lastName = getEmployeesDataFromUser();
+
+        System.out.println("Enter employee's salary");
+        String salary = getEmployeesSalaryFromUser();
+
+        return new Employee(firstName, lastName, Float.parseFloat(salary));
+    }
+
+    private static String getEmployeesDataFromUser() {
+        Scanner scanner = new Scanner(System.in);
+        String userData = scanner.nextLine();
+        while (!UserInputHandler.checkFirstNameAndLastNameCorrectness(userData)) {
+            System.out.println("Enter the correct data");
+            userData = scanner.nextLine();
+        }
+        return userData;
+    }
+
+    private static String getEmployeesSalaryFromUser() {
+        Scanner scanner = new Scanner(System.in);
+        String userData = scanner.nextLine();
+        while (!UserInputHandler.checkSalaryCorrectness(userData)) {
+            System.out.println("Enter the correct value");
+            userData = scanner.nextLine();
+        }
+        return userData;
+    }
+
+    private static boolean checkFirstNameAndLastNameCorrectness(String userInput) {
         String regEx = "^[a-zA-Z ]*$";
         return userInput.matches(regEx);
     }
 
-    public static boolean checkSalaryCorrectness(String userInput) {
+    private static boolean checkSalaryCorrectness(String userInput) {
         String regEx = "\\d+(\\.\\d+)?";
         return userInput.matches(regEx);
     }
